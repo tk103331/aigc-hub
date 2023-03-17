@@ -1,16 +1,44 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import { darkTheme, lightTheme } from 'naive-ui'
+
+const theme = ref(lightTheme)
+
 </script>
-
 <template>
-  <div class="flex flex-col p-2">
-    <div class="flex flex-row items-center justify-center">
-      <img src="/tauri.svg" class="w-20 h-20 logo tauri" alt="Tauri logo" />
-      <img src="/vue.svg" class="w-20 h-20 logo vue" alt="Vue logo" />
-    </div>
-
-    <HelloWorld msg="Hello Tauri + Vue!" />
-  </div>
+  <n-config-provider :theme="theme">
+    <n-space vertical>
+      
+      <n-layout>
+        <n-layout>
+          <n-layout-header bordered>
+            <n-menu mode="horizontal" />
+            <n-avatar src="./assets/logo.png"></n-avatar>
+            <span>AIGC-App</span>
+          </n-layout-header>
+          <n-layout has-sider>
+            <n-layout-sider
+              bordered
+              collapse-mode="width"
+              :collapsed-width="64"
+              :width="240"
+              show-trigger
+            >
+              <n-menu
+                :collapsed-width="64"
+                :collapsed-icon-size="22"
+                :options="[]"
+              />
+            </n-layout-sider>
+            <n-layout>
+              <n-button-group>
+                <n-button @click="theme = darkTheme">深色</n-button>
+                <n-button @click="theme = lightTheme">浅色</n-button>
+              </n-button-group>
+            </n-layout>
+          </n-layout>
+        </n-layout>
+      </n-layout>
+    </n-space>
+  </n-config-provider>
 </template>

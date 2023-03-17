@@ -3,19 +3,34 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import { defineConfig } from 'vite'
+import Components from 'unplugin-vue-components/vite'
+import { NaiveUiResolver } from 'unplugin-vue-components/resolvers'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     AutoImport({
-      imports: ['vue'],
+      imports: [
+        'vue',
+        {
+          'naive-ui': [
+            'useDialog',
+            'useMessage',
+            'useNotification',
+            'useLoadingBar'
+          ]
+        }
+      ],
       dts: './src/auto-imports.d.ts',
       eslintrc: {
         enabled: true,
         filepath: resolve(__dirname, '.eslintrc-auto-import.json'),
       },
     }),
+    Components({
+      resolvers: [NaiveUiResolver()]
+    })
   ],
   clearScreen: false,
   envPrefix: ['VITE_', 'TAURI_'],
